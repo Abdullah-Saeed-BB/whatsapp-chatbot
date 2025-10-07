@@ -4,4 +4,3 @@ functools
 google-generativeai
 cachetools
 twilio
-threading

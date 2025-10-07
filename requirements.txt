@@ -1,0 +1,8 @@
+flask
+sqlite3
+dotenv
+functools
+google-generativeai
+cachetools
+twilio
+threading

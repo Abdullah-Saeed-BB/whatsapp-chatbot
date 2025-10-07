@@ -1,5 +1,4 @@
 flask
-sqlite3=3.50.4 
 dotenv
 functools
 google-generativeai

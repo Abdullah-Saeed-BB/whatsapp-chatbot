@@ -1,0 +1,99 @@
+:root {
+  --body-bg: #2d2d2d;
+  --text-light: #e0e0e0;
+  --accent-green: #98fb98;
+  --initial-border: #4b5563; /* A dark gray for the unfocused border */
+  --placeholder-color: #6b7280;
+}
+
+.title {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-group-container {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem; /* Spacing between each input block */
+}
+
+/* Label Styles */
+.input-group label {
+  display: block;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* Textarea Styles for Readability */
+textarea {
+  width: 100%;
+  display: block;
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+
+  /* Readability enhancements */
+  font-size: 1rem;
+  line-height: 1.6;
+  min-height: 180px;
+  color: var(--text-light);
+  background-color: transparent;
+
+  /* Border and Focus Setup */
+  border: none;
+  border-bottom: 2px solid var(--initial-border);
+  padding: 1rem 0.5rem;
+  resize: vertical;
+  transition: border-bottom-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+/* Placeholder Text Styling */
+textarea::placeholder {
+  color: var(--placeholder-color);
+  opacity: 1; /* Ensure full visibility in some browsers */
+}
+
+/* Textarea Focus State (The Accent) */
+textarea:focus {
+  outline: none;
+  border-bottom-color: var(--accent-green);
+  box-shadow: 0 4px 0 0 var(--accent-green); /* Adds a nice solid focus line */
+}
+
+.apply-button {
+  background-color: var(--accent-green);
+  color: var(--body-bg);
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.apply-button:hover:not(:disabled) {
+  background-color: #7ce57c; /* Slightly lighter green on hover for enabled state */
+}
+
+.apply-button:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Disabled button state */
+.apply-button:disabled {
+  background-color: #4b5563; /* Initial dark gray color */
+  color: #a0a0a0; /* Dimmed text */
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+  opacity: 0.7;
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}{% endblock %} - CreativeCut</title>
+    <!-- <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    /> -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/base.css') }}"
+    />
+    {% block style %}{% endblock %}
+  </head>
+  <body>
+    <header>
+      <header class="header">
+        <div class="header-content">
+          <a href="/api/dashboard" class="logo">
+            <span class="logo-text">CreativeCut</span>
+          </a>
+          <nav class="nav-links">
+            <a href="/api/chatbot_instruction" class="nav-link">
+              Chatbot Instructions
+            </a>
+            <a href="/api/offers" class="nav-link">Offers</a>
+            <a href="/api/customers" class="nav-link">Customers</a>
+            <a href="/api/auth/logout" class="nav-link logout">Log out</a>
+          </nav>
+        </div>
+      </header>
+    </header>
+    <main class="content">{% block content %}{% endblock %}</main>
+    <footer>
+      <p>© 2025 Abdullah Saeed</p>
+      <div class="social-icons">
+        <a href="https://github.com/Abdullah-Saeed-BB" target="_blank"
+          ><i class="fab fa-github"></i
+        ></a>
+        <a href="https://www.linkedin.com/in/abdullahsaeed-dev/" target="_blank"
+          ><i class="fab fa-linkedin"></i
+        ></a>
+        <a href="https://x.com/Abdullah_SBB" target="_blank"
+          ><i class="fa-brands fa-x-twitter"></i
+        ></a>
+        <a href="mailto::abdullah.saeed.b.b@gmail.com"
+          ><i class="fas fa-envelope"></i
+        ></a>
+      </div>
+    </footer>
+  </body>
+</html>

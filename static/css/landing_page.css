@@ -1,0 +1,357 @@
+:root {
+  --color-bg-dark: #1a1a1a;
+  --color-accent: #98fb98;
+  --color-text-main: #e0e0e0;
+  --color-text-dark: #111111;
+}
+
+/* Base Styles and Global Aesthetic (Sharp Edges) */
+* {
+  box-sizing: border-box;
+  border-radius: 0 !important; /* Enforcing sharp edges globally */
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: var(--color-bg-dark);
+  color: var(--color-text-main);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-accent);
+  transition: color 0.3s;
+}
+
+a:hover {
+  color: var(--color-text-main);
+}
+
+/* Utility Classes */
+.text-accent {
+  color: var(--color-accent);
+}
+.bg-accent {
+  background-color: var(--color-accent);
+}
+.text-dark {
+  color: var(--color-text-dark);
+}
+
+/* Header */
+header {
+  padding: 1.5rem 0;
+  border-bottom: 2px solid #333;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.logo-sub {
+  color: var(--color-text-main);
+}
+
+.nav-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--color-accent);
+  color: var(--color-text-dark);
+  font-weight: 700;
+  border: 2px solid var(--color-accent);
+  transition: background-color 0.3s;
+}
+
+.nav-button:hover {
+  background-color: #72db72; /* Slightly darker hover */
+}
+
+/* Hero Section */
+.hero {
+  padding: 5rem 0 8rem 0;
+  text-align: center;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #aaa;
+  max-width: 600px;
+  margin: 0 auto 2.5rem;
+}
+
+.hero-cta {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  background-color: var(--color-accent);
+  color: var(--color-text-dark);
+  border: 4px solid var(--color-accent);
+  /* Sharp, distinct shadow effect */
+  box-shadow: 8px 8px 0px 0px #72db72;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.hero-cta:hover {
+  color: #1a1a1a;
+  transform: translate(2px, 2px);
+  box-shadow: 6px 6px 0px 0px #72db72;
+}
+
+/* Core Competencies Section */
+.competencies {
+  padding: 5rem 0;
+  border-top: 2px solid #333;
+  border-bottom: 2px solid #333;
+  text-align: center;
+}
+
+.comp-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+}
+
+.comp-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.comp-item {
+  padding: 1.5rem 1rem;
+  flex: 1 1 150px; /* Base size for wrapping */
+  max-width: 200px;
+  border: 2px solid var(--color-accent);
+  background-color: #222;
+}
+
+/* Highlight for AI Automation */
+.comp-item.ai-highlight {
+  background-color: var(--color-accent);
+  color: var(--color-text-dark);
+  font-weight: 700;
+}
+
+.comp-item span {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.comp-footer-text {
+  margin-top: 3rem;
+  color: #aaa;
+}
+
+/* Pricing Section */
+#pricing {
+  padding: 5rem 0 8rem 0;
+  text-align: center;
+}
+
+.pricing-title {
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.pricing-subtitle {
+  font-size: 1.25rem;
+  color: #aaa;
+  margin-bottom: 4rem;
+}
+
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.plan-card {
+  padding: 2rem;
+  border: 4px solid #333;
+  background-color: #1a1a1a;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Highlighted Learning Plan */
+.plan-card.highlight {
+  border-color: var(--color-accent);
+  background-color: #222;
+  position: relative;
+  transform: scale(1.03); /* Slight scale up for emphasis */
+  box-shadow: 0 0 15px rgba(152, 251, 152, 0.4); /* Subtle glow */
+}
+
+.plan-card.highlight .plan-title {
+  color: var(--color-accent);
+}
+
+.best-value-tag {
+  position: absolute;
+  top: -15px;
+  right: 0;
+  background-color: var(--color-accent);
+  color: var(--color-text-dark);
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.plan-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.plan-price {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--color-accent);
+  margin-bottom: 0.5rem;
+}
+
+.plan-price.free {
+  color: var(--color-text-main);
+}
+
+.plan-duration {
+  font-size: 1.1rem;
+  color: #aaa;
+  font-weight: 500;
+}
+
+.plan-subtitle {
+  font-size: 1rem;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
+
+.plan-features {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 2rem;
+  flex-grow: 1;
+}
+
+.plan-features li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.plan-features .icon {
+  color: var(--color-accent);
+  font-size: 1.2rem;
+  margin-right: 0.75rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.plan-features li.disabled {
+  opacity: 0.5;
+}
+
+.plan-cta {
+  display: block;
+  text-align: center;
+  padding: 1rem 1.5rem;
+  font-weight: 700;
+  border: 2px solid var(--color-accent);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Specific CTA styles */
+.plan-cta.free-btn {
+  border-color: #333;
+  color: #888;
+}
+.plan-cta.free-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.plan-cta.learning-btn {
+  background-color: var(--color-accent);
+  color: var(--color-text-dark);
+  border-color: var(--color-accent);
+}
+
+.plan-cta.pro-btn {
+  background-color: transparent;
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.plan-cta.pro-btn:hover {
+  background-color: var(--color-accent);
+  color: var(--color-text-dark);
+}
+
+/* Footer */
+footer {
+  padding: 2rem 0;
+  border-top: 2px solid #333;
+  text-align: center;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 5rem;
+  }
+  .hero-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .comp-grid {
+    flex-wrap: nowrap;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .comp-item {
+    flex: 1 1 auto;
+    max-width: none;
+  }
+
+  .pricing-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .plan-card.highlight {
+    transform: scale(1.05); /* Slightly more emphasis on desktop */
+    margin-top: -1.5rem;
+    margin-bottom: -1.5rem;
+  }
+}

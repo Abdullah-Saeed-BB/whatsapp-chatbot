@@ -1,0 +1,91 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto; /* Center the container */
+}
+
+/* -----------------------
+           1. WhatsApp Link Section
+           ----------------------- */
+.manager-link-section {
+  padding: 1.5rem 0;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+.whatsapp-link {
+  /* Basic button styling */
+  display: inline-flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  text-decoration: none;
+  font-size: 1.15rem;
+  font-weight: 600;
+
+  /* Color scheme */
+  background-color: var(--accent-green);
+  color: var(--body-bg);
+  border: 3px solid var(--accent-green);
+
+  /* Visual effects */
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.whatsapp-link:hover {
+  background-color: #7ce57c; /* Lighter green on hover */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px var(--shadow-color);
+}
+
+.whatsapp-icon {
+  margin-right: 0.75rem;
+  width: 24px;
+  height: 24px;
+  /* Placeholder for an SVG icon */
+}
+
+/* -----------------------
+           2. Metrics Cards Section
+           ----------------------- */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr; /* Default: Single column for mobile */
+  gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on larger screens */
+  }
+}
+
+.metric-card {
+  background-color: var(--card-bg);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 16px var(--shadow-color);
+  text-align: center;
+  transition: transform 0.3s ease;
+  border: 1px solid #4b5563; /* Subtle border */
+}
+
+.metric-card:hover {
+  transform: translateY(-4px);
+}
+
+.metric-value {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--accent-green);
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.metric-label {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #9ca3af; /* Light gray label */
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

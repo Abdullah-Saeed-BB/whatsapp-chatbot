@@ -1,0 +1,177 @@
+{% extends "base.html" %} {% block title %}Offers{% endblock%} {% block style %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/offers.css') }}"
+/>
+{% endblock %} {% block content %}
+<div>
+  <div>
+    <div class="title">
+      <h2>Offers</h2>
+      <button
+        class="create"
+        onclick="document.getElementById('createModal').style.display = 'block'"
+      >
+        Create
+      </button>
+    </div>
+    <div>
+      {% for offer in offers %}
+      <div id="offer_{{ offer.id }}" class="element">
+        <label for="title">Title:</label>
+        <input
+          type="text"
+          id="title"
+          name="title"
+          value="{{ offer.title }}"
+          required
+        />
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required>
+{{ offer.description }}</textarea
+        >
+
+        <label for="valid_from">Valid From:</label>
+        <input
+          type="date"
+          id="valid_from"
+          name="valid_from"
+          value="{{ offer.valid_from }}"
+          required
+        />
+
+        <label for="valid_until">Valid Until:</label>
+        <input
+          type="date"
+          id="valid_until"
+          name="valid_until"
+          value="{{ offer.valid_until }}"
+          required
+        />
+
+        <div class="action-buttons">
+          <button
+            class="update-btn"
+            data-offer-id="{{ offer.id }}"
+            onclick="updateOffer(this)"
+          >
+            Apply
+          </button>
+          <button
+            class="delete-btn"
+            data-offer-id="{{ offer.id }}"
+            data-offer-title="{{ offer.title }}"
+            onclick="deleteOffer(this)"
+          >
+            🗑️
+          </button>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <!-- Pop-up -->
+    <div>
+      <div id="createModal" class="modal">
+        <div class="modal-content">
+          <span
+            class="close-btn"
+            onclick="document.getElementById('createModal').style.display='none'"
+            >&times;</span
+          >
+          <h2>Create New Offer</h2>
+
+          <form method="POST" action="{{ url_for('offers.offers') }}">
+            {# Use 'add_new' as the identifier for the backend #}
+            <input type="hidden" name="add_new" value="1" />
+
+            <label for="new_title">Title:</label>
+            <input type="text" id="new_title" name="title" required /><br />
+
+            <label for="new_description">Description:</label>
+            <textarea
+              id="new_description"
+              name="description"
+              required
+            ></textarea
+            ><br />
+
+            <label for="new_valid_from">Valid From:</label>
+            <input
+              type="date"
+              id="new_valid_from"
+              name="valid_from"
+              required
+            /><br />
+
+            <label for="new_valid_until">Valid Until:</label>
+            <input
+              type="date"
+              id="new_valid_until"
+              name="valid_until"
+              required
+            /><br /><br />
+
+            <div class="action-buttons">
+              <button class="create-btn" type="submit">Add Offer</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  var modal = document.getElementById("createModal");
+
+  // When the user clicks anywhere outside of the modal, close it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  function deleteOffer(buttonElement) {
+    const offerId = buttonElement.getAttribute("data-offer-id");
+    const offerTitle = buttonElement.getAttribute("data-offer-title");
+
+    if (!confirm(`Are you sure you want to delete Offer ID ${offerTitle}?`)) {
+      return; // Stop if the user cancels
+    }
+
+    fetch(`/api/offers/api/${offerId}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    }).then((response) => {
+      if (response.status == 200) {
+        document.getElementById(`offer_${offerId}`).remove();
+        return response.json();
+      }
+      throw new Error("Failed to delete offer.");
+    });
+  }
+
+  function updateOffer(buttonElement) {
+    const offerId = buttonElement.getAttribute("data-offer-id");
+    const offerElement = document.getElementById(`offer_${offerId}`);
+
+    const data = {
+      title: offerElement.querySelector("#title").value,
+      description: offerElement.querySelector("#description").value,
+      valid_from: offerElement.querySelector("#valid_from").value,
+      valid_until: offerElement.querySelector("#valid_until").value,
+    };
+
+    fetch(`/api/offers/api/${offerId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    }).then((response) => {
+      if (response.status == 200) {
+        return response.json();
+      }
+      throw new Error("Failed to update offer.");
+    });
+  }
+</script>
+{%endblock %}

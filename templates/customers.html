@@ -1,0 +1,63 @@
+{% extends "base.html" %} {% block title %}Customers{% endblock %} {% block
+style %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/customers.css') }}"
+/>
+{% endblock %} {% block content %}
+<div>
+  <h2 style="margin-bottom: 20px">Customers</h2>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Created At</th>
+          <th>Name</th>
+          <th>Phone Number</th>
+          <th>Plan</th>
+          <th>Pay Style</th>
+          <th>Valid Until</th>
+          <th>From WhatsApp</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for customer in customers %}
+        <tr id="customer_{{ customer.id }}">
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.created_at.split(" ")[0] }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.phone_num }}</td>
+          <td>{{ customer.plan }}</td>
+          <td>{{ customer.pay_style }}</td>
+          <td>{{ customer.valid_until }}</td>
+          <td>{{ 'Yes' if customer.is_from_whatsapp else 'No' }}</td>
+          <td>
+            <button
+              class="delete-btn"
+              onclick="deleteCustomer('{{ customer.id }}')"
+              title="Delete"
+            >
+              🗑️
+            </button>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <script>
+    function deleteCustomer(id) {
+      fetch(`/api/customers?id=${id}`, { method: "DELETE" }).then((res) => {
+        if (res.ok) {
+          document.getElementById(`customer_${id}`).remove();
+          return res.json();
+        }
+        throw new Error("Failed to cancel customer's subscription.");
+      });
+    }
+  </script>
+</div>
+
+{% endblock %}

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CreativeCut | Master Video Editing & AI Tools</title>
+    <!-- Use Inter font family -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/landing_page.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Header / Navigation -->
+    <header>
+      <div class="container nav-content">
+        <h1 class="logo">
+          <span class="text-accent">Creative</span
+          ><span class="logo-sub">Cut</span>
+        </h1>
+        <a href="#pricing" class="nav-button"> Subscription Plans </a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h2 class="hero-title">
+          Master Video Editing with
+          <span class="text-accent">AI Automation</span>
+        </h2>
+        <p class="hero-subtitle">
+          Unlock professional skills in DaVinci Resolve, Premiere Pro, After
+          Effects, and Photoshop, amplified by cutting-edge AI tools.
+        </p>
+        <a href="subscription" target="_blank" class="hero-cta">
+          Start Your Free Plan Today
+        </a>
+      </div>
+    </section>
+
+    <!-- Core Competencies Section -->
+    <section class="competencies">
+      <div class="container">
+        <h3 class="comp-title">
+          The <span class="text-accent">Creative Suite</span> & AI Edge
+        </h3>
+        <div class="comp-grid">
+          <!-- Software 1: DaVinci Resolve -->
+          <div class="comp-item">
+            <span>🎬</span>
+            <p>DaVinci Resolve</p>
+          </div>
+          <!-- Software 2: Premiere Pro -->
+          <div class="comp-item">
+            <span>✂️</span>
+            <p>Premiere Pro</p>
+          </div>
+          <!-- Software 3: After Effects -->
+          <div class="comp-item">
+            <span>✨</span>
+            <p>After Effects</p>
+          </div>
+          <!-- Software 4: Photoshop -->
+          <div class="comp-item">
+            <span>🖼️</span>
+            <p>Photoshop</p>
+          </div>
+          <!-- AI Automation Focus -->
+          <div class="comp-item ai-highlight">
+            <span>🤖</span>
+            <p>AI Automation</p>
+          </div>
+        </div>
+        <p class="comp-footer-text">
+          AI tools cover smart scene detection, color enhancement, and instant
+          video editing online.
+        </p>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing">
+      <div class="container">
+        <h3 class="pricing-title">Unleash Your Potential</h3>
+        <p class="pricing-subtitle">
+          Choose the plan that fits your creative journey.
+        </p>
+
+        <div class="pricing-grid">
+          <!-- Plan 1: Free Starter Plan -->
+          <div class="plan-card">
+            <div>
+              <h4 class="plan-title text-accent">Free Starter Plan</h4>
+              <p class="plan-price free">
+                $0<span class="plan-duration"> / forever</span>
+              </p>
+              <p class="plan-subtitle">Kickstart your learning.</p>
+
+              <ul class="plan-features">
+                <li class="disabled">
+                  <span class="icon">▶</span>Access to select video tutorials
+                </li>
+                <li class="disabled">
+                  <span class="icon">▶</span>Community forums
+                </li>
+                <li class="disabled">
+                  <span class="icon">▶</span>Full course access (Locked)
+                </li>
+                <li class="disabled">
+                  <span class="icon">▶</span>AI video editing functionalities
+                  (Locked)
+                </li>
+              </ul>
+            </div>
+            <a
+              href="/subscription?plan=free"
+              target="_blank"
+              class="plan-cta free-btn"
+            >
+              Get Started Free
+            </a>
+          </div>
+
+          <!-- Plan 2: Learning Plan (Highlighted) -->
+          <div class="plan-card highlight">
+            <div class="best-value-tag">BEST VALUE</div>
+            <div>
+              <h4 class="plan-title">Learning Plan</h4>
+              <p class="plan-price">
+                $15<span class="plan-duration"> / month</span>
+              </p>
+              <p class="plan-subtitle">or $120 / year (Save 33%)</p>
+
+              <ul class="plan-features">
+                <li>
+                  <span class="icon">✔</span>Complete access to all beginner and
+                  intermediate courses
+                </li>
+                <li>
+                  <span class="icon">✔</span>Unlock step-by-step modules for
+                  DaVinci, Premiere Pro, and After Effects
+                </li>
+                <li>
+                  <span class="icon">✔</span>Portfolio hosting and video
+                  showcase features
+                </li>
+                <li>
+                  <span class="icon">✔</span>Standard AI video editing
+                  functionalities
+                </li>
+                <li>
+                  <span class="icon">✔</span>Download resources and assignments
+                </li>
+                <li>
+                  <span class="icon">✔</span>Certificate upon completion of
+                  courses
+                </li>
+              </ul>
+            </div>
+            <a
+              href="/subscription?plan=learning"
+              target="_blank"
+              class="plan-cta learning-btn"
+            >
+              Choose Learning
+            </a>
+          </div>
+
+          <!-- Plan 3: Pro Plan -->
+          <div class="plan-card">
+            <div>
+              <h4 class="plan-title text-accent">Pro Plan</h4>
+              <p class="plan-price">
+                $35<span class="plan-duration"> / month</span>
+              </p>
+              <p class="plan-subtitle">or $350 / year (Save 17%)</p>
+
+              <ul class="plan-features">
+                <li>
+                  <span class="icon">★</span
+                  ><span style="font-weight: 700"
+                    >All Learning Plan features</span
+                  >
+                </li>
+                <li>
+                  <span class="icon">★</span>Advanced professional courses and
+                  project guides
+                </li>
+                <li>
+                  <span class="icon">★</span>Full access to AI-powered editing
+                  tools and templates
+                </li>
+                <li>
+                  <span class="icon">★</span>Peer review, critique sessions, and
+                  live instructor webinars
+                </li>
+                <li>
+                  <span class="icon">★</span>Collaboration tools for group
+                  projects
+                </li>
+                <li>
+                  <span class="icon">★</span>Export videos without watermark, up
+                  to 4K resolution
+                </li>
+                <li>
+                  <span class="icon">★</span>Priority support and career
+                  resources
+                </li>
+              </ul>
+            </div>
+            <a
+              href="/subscription?plan=pro"
+              target="_blank"
+              class="plan-cta pro-btn"
+            >
+              Go Pro
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>
+          &copy; 2025 CreativeCut E-learning. All rights reserved. |
+          <a href="#subscription-page-link">Subscription Details</a>
+        </p>
+        <p>
+          For more information, you can contact with
+          <a href="https://wa.me/14155238886?text=Hi%20Cutbot"
+            >AI asstiance in Whastapp</a
+          >.
+        </p>
+      </div>
+    </footer>
+
+    <!-- All links point to this hypothetical subscription anchor -->
+    <a id="subscription-page-link" style="display: none"></a>
+  </body>
+</html>

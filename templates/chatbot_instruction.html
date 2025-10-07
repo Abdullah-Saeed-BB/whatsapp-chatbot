@@ -1,0 +1,64 @@
+{% extends "base.html" %} {% block title %}Chatbot Instruction{% endblock %} {%
+block style %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/chatbot_instruction.css') }}"
+/>
+{% endblock %} {% block content %}
+<div>
+  <div class="title">
+    <h2>Chatbot Instruction</h2>
+  </div>
+  <div class="input-group-container">
+    {% for key in data %}
+    <div class="input-group">
+      <div class="label-row">
+        <label for="input-{{key}}">{{ key.title() }}</label>
+        <button
+          class="apply-button"
+          data-instruction-title="{{key}}"
+          onclick="updateInstruction(this)"
+          disabled
+        >
+          Apply
+        </button>
+      </div>
+      <textarea id="input-{{key}}">{{ data[key] }}</textarea>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<script>
+  function updateInstruction(buttonElement) {
+    buttonElement.disabled = true;
+    const instrTitle = buttonElement.getAttribute("data-instruction-title");
+    const newInstruction = document.getElementById(`input-${instrTitle}`).value;
+
+    fetch(`/api/chatbot_instruction`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ [instrTitle]: newInstruction }),
+    }).then((response) => {
+      if (response.status == 200) {
+        buttonElement.disabled = true;
+        return response.json();
+      }
+      buttonElement.disabled = false;
+      throw new Error(`Failed to update ${instrTitle.title()} instruction`);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const textareas = document.querySelectorAll(".input-group textarea");
+    const buttons = document.querySelectorAll(".input-group .apply-button");
+
+    textareas.forEach((textarea, index) => {
+      const button = buttons[index];
+
+      textarea.addEventListener("input", () => {
+        button.disabled = false;
+      });
+    });
+  });
+</script>
+{% endblock %}

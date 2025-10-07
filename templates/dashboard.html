@@ -1,0 +1,71 @@
+{% extends "base.html" %} {% block title %}Dashboard{% endblock %} {% block
+style %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/dashboard.css') }}"
+/>
+{% endblock %} {% block content %}
+<div>
+  <div class="container">
+    <section class="manager-link-section">
+      <a
+        href="https://wa.me/14155238886?text=Hi%20Cutbot"
+        target="_blank"
+        class="whatsapp-link"
+        title="Click to start a chat with your Chatbot WhatsApp."
+      >
+        <span class="whatsapp-icon">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.37 4.96L2.05 22l5.25-1.37c1.45.86 3.14 1.32 4.74 1.32 5.46 0 9.9-4.44 9.9-9.9S17.5 2 12.04 2zm5.05 14.15l-.32.17c-.32.17-.74.32-1.09.32-.36 0-.78-.15-1.09-.32l-.32-.17c-1.32-.7-2.9-1.87-4.22-3.4-.32-.38-.63-.76-.94-1.2l-.17-.32c-.17-.32-.17-.74 0-1.09l.17-.32c.32-.38.7-1.01 1.09-1.32.38-.32.76-.32 1.09 0l.17.32c.32.38.63.76.94 1.2l.17.32c.32.38.1 1.01-.2 1.32-.32.38-.7.76-1.09 1.09l-.17.17c-.17.17-.17.32 0 .49l.17.17c.32.38.7 1.01 1.09 1.32 1.32.7 2.9 1.87 4.22 3.4.32.38.63.76.94 1.2l.17.32c.32.38.63.76.94 1.2l.17.32c.32.38.7.76 1.09 1.09l.17.17c.32.38.1 1.01-.2 1.32-.32.38-.7.76-1.09 1.09l-.17.17z"
+            />
+          </svg>
+        </span>
+        Direct Manager Chatbot
+      </a>
+      <p style="color: #9ca3af; margin-top: 1rem; font-size: 0.9rem">
+        (Placeholder number: +141 552 388 86)
+      </p>
+    </section>
+
+    <!-- 2. & 3. Subscription Numbers -->
+    {% if (error) %}
+    <section>
+      <h2 style="text-align: center">
+        😞 Sorry, there is error happend. Pleses try again later
+      </h2>
+    </section>
+    {% else %}
+    <section>
+      <h2 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 2rem">
+        Key Subscription Metrics
+      </h2>
+
+      <div class="metrics-grid">
+        <!-- Metric Card: Total Subscriptions -->
+        <div class="metric-card">
+          <div class="metric-value" id="totalSubscriptions">
+            {{num_of_customers}}
+          </div>
+          <div class="metric-label">Total Active Subscriptions</div>
+        </div>
+
+        <!-- Metric Card: Subscriptions from WhatsApp -->
+        <div class="metric-card">
+          <div class="metric-value" id="whatsappSubscriptions">
+            {{num_of_customers_whatsapp}}
+          </div>
+          <div class="metric-label">From WhatsApp Chatbot</div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

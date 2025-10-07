@@ -10,7 +10,7 @@ from routes.offers import offers_bp
 from routes.dashboard import dashboard_bp
 from routes.auth import auth_bp
 from routes.chatbot_instruction import chatbot_instruction_bp
-# from routes.whatsapp import whatsapp_bp
+from routes.whatsapp import whatsapp_bp
 from routes.subscription import subscription_bp
 
 app = Flask(__name__)
@@ -45,7 +45,7 @@ app.register_blueprint(dashboard_bp, url_prefix="/api/dashboard")
 app.register_blueprint(chatbot_instruction_bp, url_prefix="/api/chatbot_instruction")
 app.register_blueprint(auth_bp, url_prefix="/api/auth")
 app.register_blueprint(subscription_bp, url_prefix="/subscription")
-# app.register_blueprint(whatsapp_bp, url_prefix="/whatsapp")
+app.register_blueprint(whatsapp_bp, url_prefix="/whatsapp")
 
 if __name__ == "__main__":
     app.run(debug=True)

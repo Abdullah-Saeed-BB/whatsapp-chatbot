@@ -1,5 +1,6 @@
 from flask import Blueprint, request, current_app, Response, render_template, redirect, url_for
 from routes.auth import login_required
+from routes.whatsapp import load_model
 import json
 
 offers_bp = Blueprint("offers", __name__)
@@ -26,7 +27,7 @@ def offers():
                 (data.get("title"), data.get("description"), data.get("valid_from"), data.get("valid_until"))
             )
             db.commit()
-            # return Response(json.dumps({"message": "Offer created"}), mimetype="application/json", status=201)
+
             return redirect(url_for("offers.offers"))
 
     except Exception as e:

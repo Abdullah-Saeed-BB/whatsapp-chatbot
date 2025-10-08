@@ -2,7 +2,7 @@ from flask import Blueprint, request, Response, current_app
 from dotenv import load_dotenv
 from twilio.twiml.messaging_response import MessagingResponse
 import google.generativeai as genai
-from routes.utils import load_system_instruction # , get_history, save_history
+from routes.utils import load_system_instruction, get_history, save_history
 import json
 import os
 
@@ -31,27 +31,29 @@ def whatsapp_webhook():
     resp.message(res)
 
     return str(resp)
+    # response = Response(json.dumps({"res": res, "history": history}))
+    # return response
+
 
 def generate_response(body, sender, user_name):
-    # contents = get_history(sender, body, user_name)
-    contents = [
-        {"role": "user", "parts": ["Abdullah Saeed: What do you got"]},
-        {"role": "model", "parts": ["We have e-learning platform about teaching video editing?"]},
-        {"role": "user", "parts": ["Abdullah Saeed: " + body]}
-    ]
-
+    contents = get_history(sender, body, user_name)
 
     if not model:
         load_model()
 
     model_res = model.generate_content(contents=contents, generation_config={
         "temperature": .15,
-        "max_output_tokens":400
+        "max_output_tokens": 600
     })
 
-    # save_history(sender, contents, model_res.text)
+    print("\n\nContents:", contents)
 
-    return model_res.text
+    save_history(sender, contents, model_res)
+
+    if model_res.candidates and model_res.candidates[0].content.parts:
+        return model_res.text
+    raise Exception("Model doesn't response")
+    
 
 def load_model():
     global model

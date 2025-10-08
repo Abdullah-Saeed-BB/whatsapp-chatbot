@@ -2,7 +2,7 @@ from flask import Blueprint, request, Response, current_app
 from dotenv import load_dotenv
 from twilio.twiml.messaging_response import MessagingResponse
 import google.generativeai as genai
-from routes.utils import load_system_instruction, get_history, save_history
+from routes.utils import load_system_instruction # , get_history, save_history
 import json
 import os
 

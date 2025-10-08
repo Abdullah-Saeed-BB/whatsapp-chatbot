@@ -12,10 +12,7 @@ whatsapp_bp = Blueprint("whatsapp", __name__)
 
 # Set up the model
 genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
-# model_client = genai.Client()
-model = genai.GenerativeModel('gemini-2.5-flash')
-# model = partial(model_client.models.generate_content, model="gemini-2.5-flash")
-
+model = None
 
 @whatsapp_bp.route("/", methods=["POST"])
 def whatsapp_webhook():
@@ -26,25 +23,36 @@ def whatsapp_webhook():
     resp = MessagingResponse()
 
     try:
-        res, hist = generate_response(user_msg, sender, user_name)
+        res = generate_response(user_msg, sender, user_name)
     except Exception as e:
+        print(e)
         res = "Sorry, there error occures while generate the response. Please try again later.\n\nالمعذرة, ولكن هنالك خطأ حدث اثناء إنشاء الرد. الرجاء المحاولة مرة اخرى لاحقاً"
     
     resp.message(res)
 
-    return Response(json.dumps({"resp": res, "history": list(map(lambda x: x.parts[0].text, hist))}), mimetype="application/json", status=200)
+    return str(resp)
 
 def generate_response(body, sender, user_name):
-    system_instruction = load_system_instruction(user_name)
+    # contents = get_history(sender, body, user_name)
+    contents = [
+        {"role": "user", "parts": ["Abdullah Saeed: What do you got"]},
+        {"role": "model", "parts": ["We have e-learning platform about teaching video editing?"]},
+        {"role": "user", "parts": ["Abdullah Saeed: " + body]}
+    ]
 
-    contents = get_history(sender, body)
 
-    model_res = model.generate_content(contents=contents, config=genai.types.GenerateContentConfig(
-        temperature=.0,
-        system_instruction=system_instruction,
-        max_output_tokens=400
-    ))
+    if not model:
+        load_model()
 
-    save_history(sender, contents, model_res.text)
+    model_res = model.generate_content(contents=contents, generation_config={
+        "temperature": .15,
+        "max_output_tokens":400
+    })
 
-    return model_res.text, contents
+    # save_history(sender, contents, model_res.text)
+
+    return model_res.text
+
+def load_model():
+    global model
+    model = genai.GenerativeModel('gemini-2.5-flash', system_instruction=load_system_instruction())

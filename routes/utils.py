@@ -24,7 +24,7 @@ def get_biling_status(user_id):
 
     db.load 
 
-def load_system_instruction(user_name):
+def load_system_instruction():
     db = current_app.get_db()
 
     with open("./db/system_instruction.json") as f:
@@ -33,8 +33,6 @@ def load_system_instruction(user_name):
 
     for key, value in sys.items():
         sys_txt += f"{key}:\n{value}\n\n"
-
-    sys_txt += f"THE USER NAME IS: {user_name}\n\n" if user_name else ""
 
     # Adding the offers in `system_instruction`
     sys_txt += "OFFERS:\n"
@@ -48,26 +46,33 @@ def load_system_instruction(user_name):
 # For chats sessions
 SESSION_CHAT_HISTORIES = TTLCache(maxsize=1000, ttl=300)
 
-def get_history(user_id, new_message):
+def get_history(user_id, new_message, user_name):
     if SESSION_CHAT_HISTORIES.get(user_id):
+        print("GETTING CONTENTS FROM OUR CHAT HISTORY")
         new_contents = SESSION_CHAT_HISTORIES[user_id]
         new_contents.append(UserContent(parts=[Part(text=new_message)]))
+        print("DONE FROM `GETTING CONTENTS FROM OUR CHAT HISTORY`")
  
     else:
+        print("GETTING CONTENTS FROM TWILIO")
         inbound_messages = twilio_client.messages.list(from_=user_id, limit=5)
 
         outbound_messages = twilio_client.messages.list(to=user_id, limit=5)
+        print("1")
 
         all_messages = inbound_messages + outbound_messages
         
         conversation = sorted(all_messages, 
             key=lambda m: m.date_sent or m.date_created # Sort by sent date, fallback to creation date
         )
+        print("2")
 
         new_contents = list(map(lambda x: 
                        UserContent(parts=[Part(text=x.body)]) if x.direction == "inbound"
                        else ModelContent(parts=[Part(text=x.body)]), conversation))
         new_contents.append(UserContent(parts=[Part(text=new_message)]))
+        print("3")
+        print("DONE FROM `GETTING CONTENTS FROM TWILIO`")
 
     return new_contents
 

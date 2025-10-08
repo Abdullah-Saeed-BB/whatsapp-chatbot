@@ -48,9 +48,9 @@ def generate_response(body, sender, user_name):
 
     print("\n\nContents:", contents)
 
-    save_history(sender, contents, model_res)
 
     if model_res.candidates and model_res.candidates[0].content.parts:
+        save_history(sender, contents, model_res.text)
         return model_res.text
     raise Exception("Model doesn't response")
     

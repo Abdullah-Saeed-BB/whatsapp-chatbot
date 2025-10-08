@@ -36,7 +36,7 @@ def subscription():
             return redirect(url_for("subscription.subscription"))
     
     plan = request.args.get("plan")
-    is_from_whatsapp = True if request.args.get("ifw") != "0" else False
+    is_from_whatsapp = True if request.args.get("ifw") == "1" else False
 
     return render_template("subscription.html", plan=plan, is_from_whatsapp=is_from_whatsapp)
     

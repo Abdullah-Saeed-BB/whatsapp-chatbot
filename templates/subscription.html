@@ -168,7 +168,7 @@
       <h2>Join <span class="text-accent">CreativeCut</span></h2>
       <!-- <form onsubmit="handleSubmission(event)"> -->
       <form method="POST" action="{{ url_for('subscription.subscription')}}">
-        <input style="display: none" type="checkbox" id="is_from_whatsapp" name="is_from_whatsapp" {% if is_from_whatsapp %}checked{% endif %}/>
+        <input style="display: none;" type="checkbox" id="is_from_whatsapp" name="is_from_whatsapp" {% if is_from_whatsapp %}checked{% endif %}/>
 
         <div class="form-group">
           <label for="name">Full Name</label>

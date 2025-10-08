@@ -64,8 +64,6 @@ def get_history(user_id, new_message):
             key=lambda m: m.date_sent or m.date_created # Sort by sent date, fallback to creation date
         )
 
-        
-
         new_contents = list(map(lambda x: 
                        UserContent(parts=[Part(text=x.body)]) if x.direction == "inbound"
                        else ModelContent(parts=[Part(text=x.body)]), conversation))
@@ -78,10 +76,10 @@ def save_history(user_id, new_contents, new_model_res=None):
         new_contents.append(ModelContent(parts=[Part(text=new_model_res)]))
     SESSION_CHAT_HISTORIES[user_id] = new_contents
 
-# def background_cleanup():
-#     while True:
-#         list(SESSION_CHAT_HISTORIES.items()) 
-#         time.sleep(60)
+def background_cleanup():
+    while True:
+        list(SESSION_CHAT_HISTORIES.items()) 
+        time.sleep(60)
 
-# cleanup_thread = threading.Thread(target=background_cleanup, daemon=True)
-# cleanup_thread.start()
+cleanup_thread = threading.Thread(target=background_cleanup, daemon=True)
+cleanup_thread.start()

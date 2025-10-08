@@ -15,7 +15,7 @@ body {
 
 .login-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
   padding: 20px;
 }
 
@@ -105,6 +105,13 @@ input[type="password"]:focus {
   background-color: #4fc3f7;
   color: #2d2d2d;
   border: 2px solid #29b6f6;
+}
+
+.hint {
+  margin-top: 10px;
+  color: #afaeae;
+  text-align: center;
+  font-style: italic;
 }
 
 /* Responsive design */

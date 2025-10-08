@@ -1,18 +1,20 @@
 from flask import Blueprint, request, Response, current_app
 from dotenv import load_dotenv
 from twilio.twiml.messaging_response import MessagingResponse
-from google import genai
-from functools import partial
+import google.generativeai as genai
 from routes.utils import load_system_instruction, get_history, save_history
 import json
+import os
 
 load_dotenv()
 
 whatsapp_bp = Blueprint("whatsapp", __name__)
 
 # Set up the model
-model_client = genai.Client()
-model = partial(model_client.models.generate_content, model="gemini-2.5-flash")
+genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
+# model_client = genai.Client()
+model = genai.GenerativeModel('gemini-2.5-flash')
+# model = partial(model_client.models.generate_content, model="gemini-2.5-flash")
 
 
 @whatsapp_bp.route("/", methods=["POST"])
@@ -37,7 +39,7 @@ def generate_response(body, sender, user_name):
 
     contents = get_history(sender, body)
 
-    model_res = model(contents=contents, config=genai.types.GenerateContentConfig(
+    model_res = model.generate_content(contents=contents, config=genai.types.GenerateContentConfig(
         temperature=.0,
         system_instruction=system_instruction,
         max_output_tokens=400

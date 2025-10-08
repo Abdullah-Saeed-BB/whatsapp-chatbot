@@ -38,6 +38,7 @@
               <th>Plan</th>
               <td>{{ customer.plan }}</td>
             </tr>
+            {% if customer.plan != "free" %}
             <tr>
               <th>Pay Style</th>
               <td>{{ customer.pay_style }}</td>
@@ -46,6 +47,7 @@
               <th>Valid Until</th>
               <td>{{ customer.valid_until }}</td>
             </tr>
+            {% endif %}
             <tr>
               <th>Created At</th>
               <td>{{ customer.created_at }}</td>

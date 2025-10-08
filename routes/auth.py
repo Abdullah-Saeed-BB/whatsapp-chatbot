@@ -5,8 +5,7 @@ auth_bp = Blueprint("auth", __name__)
 
 # Simple user database for demonstration
 users = {
-    'admin': 'password123',
-    'user': 'userpass'
+    'admin': '1234',
 }
 
 def login_required(f):
@@ -37,4 +36,4 @@ def login():
 def logout():
     session.pop('username', None)
     flash('You have been logged out', 'info')
-    return redirect(url_for('auth.login'))
+    return redirect(url_for('home'))

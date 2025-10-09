@@ -1,11 +1,9 @@
-from flask import Blueprint, request, Response, current_app
+from flask import Blueprint, request
 from dotenv import load_dotenv
 from twilio.twiml.messaging_response import MessagingResponse
 import google.generativeai as genai
 from routes.utils import load_system_instruction, get_history, save_history
-import json
 import os
-from pprint import pprint
 
 load_dotenv()
 
@@ -17,7 +15,7 @@ model = None
 
 @whatsapp_bp.route("/", methods=["POST"])
 def whatsapp_webhook():
-    user_msg = request.form.get("Body")  # User's message
+    user_msg = request.form.get("Body")
     sender = request.form.get("From")
     user_name = request.form.get("ProfileName")
 
@@ -30,8 +28,6 @@ def whatsapp_webhook():
 
     try:
         res = generate_response(user_msg, sender, user_name)
-
-        print("AI:", res)
     except Exception as e:
         print(e)
         res = "Sorry, there error occures while generate the response. Please try again later.\n\nالمعذرة, ولكن هنالك خطأ حدث اثناء إنشاء الرد. الرجاء المحاولة مرة اخرى لاحقاً"
@@ -54,12 +50,9 @@ def generate_response(body, sender, user_name):
         "max_output_tokens": 600
     })
 
-    print(contents)
-
+    print("Contents:", contents)
 
     if model_res.candidates and model_res.candidates[0].content.parts:
-        # save_history(sender, contents, model_res["text"])
-        # return model_res["text"]
         save_history(sender, contents, model_res.text)
         return model_res.text
     raise Exception("Model didn't response")

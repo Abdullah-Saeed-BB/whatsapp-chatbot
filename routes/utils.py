@@ -49,23 +49,27 @@ SESSION_CHAT_HISTORIES = TTLCache(maxsize=1000, ttl=600)
 def get_history(user_id, new_message, user_name):
     if SESSION_CHAT_HISTORIES.get(user_id):
         new_contents = SESSION_CHAT_HISTORIES[user_id]
-        new_contents.append({"role": "user", "parts": [f'{user_name}: new_message']})
+        new_contents.append({"role": "user", "parts": [f'{user_name}: {new_message}']})
  
     else:
-        inbound_messages = twilio_client.messages.list(from_=user_id, limit=5)
+        try:
+            inbound_messages = twilio_client.messages.list(from_=user_id, limit=5)
 
-        outbound_messages = twilio_client.messages.list(to=user_id, limit=5)
+            outbound_messages = twilio_client.messages.list(to=user_id, limit=5)
 
-        all_messages = inbound_messages + outbound_messages
-        
-        conversation = sorted(all_messages, 
-            key=lambda m: m.date_sent or m.date_created # Sort by sent date, fallback to creation date
-        )
+            all_messages = inbound_messages + outbound_messages
+            
+            conversation = sorted(all_messages, 
+                key=lambda m: m.date_sent or m.date_created # Sort by sent date, fallback to creation date
+            )
 
-        new_contents = list(map(lambda x: 
-                       {"role": "user", "parts": [x.body]} if x.direction == "inbound"
-                       else {"role": "model", "parts": [x.body]}, conversation))
-        new_contents.append({"role": "user", "parts": [new_message]})
+            new_contents = list(map(lambda x: 
+                        {"role": "user", "parts": [x.body]} if x.direction == "inbound"
+                        else {"role": "model", "parts": [x.body]}, conversation))
+            new_contents.append({"role": "user", "parts": [f'{user_name}: {new_message}']})
+        except: 
+            print("Error: Not able to load the converstion")
+            new_contents = [{"role": "user", "parts": [f'{user_name}: {new_message}']}]
 
     return new_contents
 

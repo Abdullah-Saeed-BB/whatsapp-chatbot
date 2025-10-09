@@ -5,6 +5,7 @@ import google.generativeai as genai
 from routes.utils import load_system_instruction, get_history, save_history
 import json
 import os
+from pprint import pprint
 
 load_dotenv()
 
@@ -20,10 +21,17 @@ def whatsapp_webhook():
     sender = request.form.get("From")
     user_name = request.form.get("ProfileName")
 
+    msg = f"| {user_name} ({sender}): {user_msg} |"
+    print("-" * (len(msg) + 2))
+    print(msg)
+    print("-" * (len(msg) + 2))
+
     resp = MessagingResponse()
 
     try:
         res = generate_response(user_msg, sender, user_name)
+
+        print("AI:", res)
     except Exception as e:
         print(e)
         res = "Sorry, there error occures while generate the response. Please try again later.\n\nالمعذرة, ولكن هنالك خطأ حدث اثناء إنشاء الرد. الرجاء المحاولة مرة اخرى لاحقاً"
@@ -46,13 +54,15 @@ def generate_response(body, sender, user_name):
         "max_output_tokens": 600
     })
 
-    print("\n\nContents:", contents)
+    print(contents)
 
 
     if model_res.candidates and model_res.candidates[0].content.parts:
+        # save_history(sender, contents, model_res["text"])
+        # return model_res["text"]
         save_history(sender, contents, model_res.text)
         return model_res.text
-    raise Exception("Model doesn't response")
+    raise Exception("Model didn't response")
     
 
 def load_model():

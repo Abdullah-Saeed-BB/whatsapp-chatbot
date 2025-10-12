@@ -152,6 +152,8 @@
   }
 
   function updateOffer(buttonElement) {
+    buttonElement.disabled = true;
+
     const offerId = buttonElement.getAttribute("data-offer-id");
     const offerElement = document.getElementById(`offer_${offerId}`);
 
@@ -167,6 +169,7 @@
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     }).then((response) => {
+      buttonElement.disabled = false;
       if (response.status == 200) {
         return response.json();
       }

@@ -27,38 +27,55 @@ block style %}
     </div>
     {% endfor %}
   </div>
-</div>
-<script>
-  function updateInstruction(buttonElement) {
-    buttonElement.disabled = true;
-    const instrTitle = buttonElement.getAttribute("data-instruction-title");
-    const newInstruction = document.getElementById(`input-${instrTitle}`).value;
+  <script>
+    function updateInstruction(buttonElement) {
+      buttonElement.disabled = true;
+      const instrTitle = buttonElement.getAttribute("data-instruction-title");
+      const newInstruction = document.getElementById(
+        `input-${instrTitle}`
+      ).value;
 
-    fetch(`/api/chatbot_instruction`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ [instrTitle]: newInstruction }),
-    }).then((response) => {
-      if (response.status == 200) {
-        buttonElement.disabled = true;
-        return response.json();
-      }
-      buttonElement.disabled = false;
-      throw new Error(`Failed to update ${instrTitle.title()} instruction`);
-    });
-  }
+      fetch(`/api/chatbot_instruction`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [instrTitle]: newInstruction }),
+      }).then((response) => {
+        if (response.status == 200) {
+          buttonElement.disabled = true;
+          return response.json();
+        }
+        buttonElement.disabled = false;
+        throw new Error(`Failed to update ${instrTitle.title()} instruction`);
+      });
+    }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const textareas = document.querySelectorAll(".input-group textarea");
-    const buttons = document.querySelectorAll(".input-group .apply-button");
+    document.addEventListener("DOMContentLoaded", () => {
+      const textareas = document.querySelectorAll(".input-group textarea");
+      const buttons = document.querySelectorAll(".input-group .apply-button");
 
-    textareas.forEach((textarea, index) => {
-      const button = buttons[index];
+      textareas.forEach((textarea, index) => {
+        const button = buttons[index];
 
-      textarea.addEventListener("input", () => {
-        button.disabled = false;
+        textarea.addEventListener("input", () => {
+          button.disabled = false;
+        });
       });
     });
-  });
-</script>
-{% endblock %}
+
+    function addPair() {
+      const div = document.createElement("div");
+      div.className = "pair";
+      div.innerHTML = `
+    <input type="text" name="keys[]" placeholder="Key">
+    <input type="text" name="values[]" placeholder="Value">
+    <button type="button" onclick="removePair(this)">×</button>
+  `;
+      document.getElementById("pairs").appendChild(div);
+    }
+
+    function removePair(btn) {
+      btn.parentElement.remove();
+    }
+  </script>
+  {% endblock %}
+</div>

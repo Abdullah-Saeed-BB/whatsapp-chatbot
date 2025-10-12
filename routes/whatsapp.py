@@ -20,9 +20,9 @@ def whatsapp_webhook():
     user_name = request.form.get("ProfileName")
 
     msg = f"| {user_name} ({sender}): {user_msg} |"
-    print("-" * (len(msg) + 2))
+    print("-" * (len(msg)))
     print(msg)
-    print("-" * (len(msg) + 2))
+    print("-" * (len(msg)))
 
     resp = MessagingResponse()
 

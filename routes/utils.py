@@ -37,9 +37,13 @@ def load_system_instruction():
     # Adding the offers in `system_instruction`
     sys_txt += "OFFERS:\n"
     cur = db.execute("SELECT * FROM offers")
-    for offer in cur.fetchall():
-        offer = dict(offer)
-        sys_txt += f"{offer["title"]} - {offer["description"]}. Starts in {offer["valid_from"]} to {offer["valid_until"]}\n" 
+    offers = cur.fetchall()
+    if offers:
+        for offer in offers:
+            offer = dict(offer)
+            sys_txt += f"{offer["title"]} - {offer["description"]}. Starts in {offer["valid_from"]} to {offer["valid_until"]}\n" 
+    else:
+        sys_txt += "There is no offer yet"
 
     return sys_txt
 

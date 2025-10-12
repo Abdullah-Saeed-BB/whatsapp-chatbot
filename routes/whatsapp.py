@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, current_app
 from dotenv import load_dotenv
 from twilio.twiml.messaging_response import MessagingResponse
 import google.generativeai as genai
@@ -35,22 +35,18 @@ def whatsapp_webhook():
     resp.message(res)
 
     return str(resp)
-    # response = Response(json.dumps({"res": res, "history": history}))
-    # return response
-
 
 def generate_response(body, sender, user_name):
     contents = get_history(sender, body, user_name)
 
-    if not model:
+    if not model or not current_app.config["is_sys_instruction_updated"]:
         load_model()
+        current_app.config["is_sys_instruction_updated"] = True
 
     model_res = model.generate_content(contents=contents, generation_config={
         "temperature": .15,
         "max_output_tokens": 600
     })
-
-    print("Contents:", contents)
 
     if model_res.candidates and model_res.candidates[0].content.parts:
         save_history(sender, contents, model_res.text)
@@ -60,4 +56,6 @@ def generate_response(body, sender, user_name):
 
 def load_model():
     global model
-    model = genai.GenerativeModel('gemini-2.5-flash', system_instruction=load_system_instruction())
+    system_instruction = load_system_instruction()
+
+    model = genai.GenerativeModel('gemini-2.5-flash', system_instruction=system_instruction)

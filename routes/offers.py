@@ -28,6 +28,8 @@ def offers():
             )
             db.commit()
 
+            current_app.config["is_sys_instruction_updated"] = False
+
             return redirect(url_for("offers.offers"))
 
     except Exception as e:
@@ -47,6 +49,9 @@ def offers_api(offer_id):
             db.commit()
             if cur.rowcount == 0:
                 return Response(json.dumps({"error": "Offer not found"}), mimetype="application/json", status=404)
+            
+            current_app.config["is_sys_instruction_updated"] = False
+
             return Response(json.dumps({"message": "Offer deleted"}), mimetype="application/json", status=200)
         elif request.method == "PUT":
             data = request.get_json()
@@ -56,6 +61,9 @@ def offers_api(offer_id):
             db.commit()
             if cur.rowcount == 0:
                 return Response(json.dumps({"error": f"Offer not found for this id {offer_id}"}), mimetype="application/json", status=404)
+            
+            current_app.config["is_sys_instruction_updated"] = False
+
             return Response(json.dumps({"message": "Offer updated"}), mimetype="application/json", status=200)
     except Exception as e:
         return Response(json.dumps({"error": str(e)}), mimetype="application/json", status=500)

@@ -33,7 +33,7 @@ def subscription():
             return redirect(url_for("subscription.subscription_status", subs_id=id))
         except Exception as e:
             print("ERROR:", str(e))
-            return redirect(url_for("subscription.subscription"))
+            return render_template("subscription.html", error="Unable to submit the subscription.")
     
     plan = request.args.get("plan")
     is_from_whatsapp = True if request.args.get("ifw") == "1" else False

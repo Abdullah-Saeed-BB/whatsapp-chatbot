@@ -135,7 +135,7 @@
     const offerId = buttonElement.getAttribute("data-offer-id");
     const offerTitle = buttonElement.getAttribute("data-offer-title");
 
-    if (!confirm(`Are you sure you want to delete Offer ID ${offerTitle}?`)) {
+    if (!confirm(`Are you sure you want to delete '${offerTitle}' Offer?`)) {
       return; // Stop if the user cancels
     }
 

@@ -32,6 +32,7 @@ def close_db(error):
         db.close()
 
 app.get_db = get_db
+app.config["is_sys_instruction_updated"] = False
 
 @app.route("/", methods=["GET"])
 def home():

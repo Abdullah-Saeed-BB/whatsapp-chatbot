@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, render_template
+from flask import Blueprint, request, Response, render_template, current_app
 from routes.auth import login_required
 import json
 
@@ -23,6 +23,8 @@ def chatbot_instruction():
             
             with open("./db/system_instruction.json", "w") as f:
                 json.dump(data, f, indent=4)
+
+            current_app.config["is_sys_instruction_updated"] = False
 
             return Response(json.dumps({"message": "System instruction updated"}))
         return Response(json.dumps({"error": "unvalid request method"}, status=403))

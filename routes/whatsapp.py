@@ -52,27 +52,27 @@ def generate_response(body, sender, user_name):
         load_model()
         current_app.config["is_sys_instruction_updated"] = True
 
-    # model_res = model.generate_content(contents=contents, generation_config={
-    #     "temperature": .15,
-    #     "max_output_tokens": 600
-    # })
+    model_res = model.generate_content(contents=contents, generation_config={
+        "temperature": .15,
+        "max_output_tokens": 600
+    })
 
-    model_res = {"text": "FU#KING RESPONSE!!"}
+    # model_res = {"text": "FU#KING RESPONSE!!"}
 
-    # if model_res.candidates and model_res.candidates[0].content.parts:
-    if True:
+    if model_res.candidates and model_res.candidates[0].content.parts:
+    # if True:
         if len(contents) > maximum_messages - 3:
             return [
-                # model_res.text,
                 f"You only got {maximum_messages - len(contents)} messages left\
                 \nلديك فقد {maximum_messages - len(contents)} رسائل متبقية",
-                model_res["text"]
+                model_res.text,
+                # model_res["text"], 
             ]
 
-        # save_history(sender, contents, model_res.text)
-        save_history(sender, contents, model_res["text"])
-        # return model_res.text
-        return model_res["text"]
+        save_history(sender, contents, model_res.text)
+        # save_history(sender, contents, model_res["text"])
+        return model_res.text
+        # return model_res["text"]
     raise Exception("Model didn't response")
     
 

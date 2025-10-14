@@ -65,8 +65,8 @@ def generate_response(body, sender, user_name):
             return [
                 # model_res.text,
                 f"You only got {maximum_messages - len(contents)} messages left\
-                \nلديك فقد {maximum_messages - len(contents)} رسائل متبقية"
-                model_res["text"],
+                \nلديك فقد {maximum_messages - len(contents)} رسائل متبقية",
+                model_res["text"]
             ]
 
         # save_history(sender, contents, model_res.text)

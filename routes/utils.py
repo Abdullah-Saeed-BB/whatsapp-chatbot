@@ -1,5 +1,5 @@
 # from google.genai.types import UserContent, ModelContent, Part
-from flask import current_app
+from flask import current_app, request
 from cachetools import TTLCache
 from twilio.rest import Client
 import threading
@@ -15,14 +15,36 @@ twilio_whatsapp_num = os.getenv("TWILIO_WHATSAPP_NUM")
 
 twilio_client = Client(account_sid, auth_token)
 
-key_words = ["status", "my biling", "my subscription"]
-def is_check_billing_status(user_msg):
-    pass
+def get_subscription_details(subs_id, to_string):
+    """
+        Get all the details of the subscription. By providing the subscription id.
+        Args:
+            subscription_id: It starts by IRC then 7 random numbers 
+    """
+    db = current_app.get_db()    
 
-def get_biling_status(user_id):
-    db = current_app.get_db()
+    try:
+        cur = db.execute("SELECT * FROM customers WHERE id = ?", (subs_id,))
+        row = cur.fetchone()
+        if not row: data = {"error": 404}
+        else: data = dict(row)
+    except:
+        data = {"error": 400}
 
-    db.load 
+    if not to_string:
+        return data
+
+    match data.get("error"):
+        case 404:
+            return "Sorry, we didn't find a subscription with that ID. Please check the ID and try again\nنعتذر، لم نعثر على اشتراك بهذا ID. يُرجى التحقق من ID الصحيح والمحاولة مرة أخرى"
+        case 400:
+            return "Sorry, a technical issue occurred while retrieving your subscription data. Please try again later.\n نعتذر، حدثت مشكلة تقنية أثناء محاولة جلب بيانات اشتراكك. يُرجى المحاولة مرة أخرى في وقت لاحق."
+        case _:
+            try:
+                return f"ID: {subs_id}\nName: {data["name"]}\nPhone Number: {data["phone_num"]}\
+                    \nPlan: {data["plan"]}\nPay Style: {data["pay_style"]}\nValid Until: {data["valid_until"]}"
+            except: return data
+
 
 def load_system_instruction():
     db = current_app.get_db()
@@ -57,9 +79,9 @@ def get_history(user_id, new_message, user_name):
  
     else:
         try:
-            inbound_messages = twilio_client.messages.list(from_=user_id, limit=5)
+            inbound_messages = twilio_client.messages.list(from_=user_id, limit=2)
 
-            outbound_messages = twilio_client.messages.list(to=user_id, limit=5)
+            outbound_messages = twilio_client.messages.list(to=user_id, limit=2)
 
             all_messages = inbound_messages + outbound_messages
             

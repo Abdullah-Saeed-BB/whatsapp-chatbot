@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 - Page Not Found</title>
+    <!-- Inter font from Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Define Colors and Font */
+      :root {
+        --color-bg: #2d2d2d;
+        --color-text: #e0e0e0;
+        --color-accent: #98fb98;
+      }
+
+      /* Base Styles and Layout (Equivalent to Tailwind h-screen, flex, items-center, justify-center) */
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--color-bg);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem; /* p-4 */
+        margin: 0;
+        color: var(--color-text);
+        text-align: center;
+      }
+
+      /* Content Container (Equivalent to max-w-xl, w-full) */
+      .error-container {
+        max-width: 42rem; /* 672px - approx max-w-xl */
+        width: 100%;
+      }
+
+      /* 404 Code Styling */
+      .error-code {
+        /* Responsive font sizing using clamp: min 6rem, preferred 25vw, max 18rem */
+        font-size: clamp(6rem, 25vw, 18rem);
+        font-weight: 900; /* font-extrabold */
+        color: var(--color-accent);
+        margin-bottom: 1rem; /* mb-4 */
+        line-height: 1;
+        transition: transform 300ms ease-in-out;
+        cursor: default;
+      }
+
+      .error-code:hover {
+        transform: scale(1.02);
+      }
+
+      /* Main Headline */
+      .main-message {
+        font-size: 2rem; /* text-3xl */
+        font-weight: 700; /* font-bold */
+        margin-bottom: 1.5rem; /* mb-6 */
+        letter-spacing: -0.025em; /* tracking-tight */
+      }
+
+      /* Sub-text */
+      .description {
+        font-size: 1.125rem; /* text-lg */
+        opacity: 0.8;
+        margin-bottom: 2.5rem; /* mb-10 */
+      }
+
+      /* Responsive adjustments for larger screens (sm: prefix equivalent) */
+      @media (min-width: 640px) {
+        .main-message {
+          font-size: 2.25rem; /* sm:text-4xl */
+        }
+        .description {
+          font-size: 1.25rem; /* sm:text-xl */
+        }
+      }
+
+      /* Button Styling (Equivalent to Tailwind button classes) */
+      .home-button {
+        display: inline-block;
+        padding: 0.75rem 2rem; /* px-8 py-3 */
+        font-size: 1.125rem; /* text-lg */
+        font-weight: 600; /* font-semibold */
+        border-radius: 0.75rem; /* rounded-xl */
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+          0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+        transition: all 300ms ease-in-out;
+        background-color: var(--color-accent);
+        color: var(
+          --color-bg
+        ); /* Text color set to background color for contrast */
+        text-decoration: none; /* Remove underline */
+        border: none;
+      }
+
+      .home-button:hover {
+        opacity: 0.9; /* hover:bg-opacity-90 */
+        transform: scale(1.05); /* hover:scale-[1.05] */
+      }
+
+      .home-button:focus {
+        outline: none;
+        box-shadow: 0 0 0 4px rgba(152, 251, 152, 0.5); /* focus:ring-4 focus:ring-mint-accent focus:ring-opacity-50 */
+      }
+
+      /* Subtle Footer */
+      .footer-note {
+        margin-top: 3rem; /* mt-12 */
+        opacity: 0.4;
+        font-size: 0.875rem; /* text-sm */
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 404 Error Container -->
+    <div class="error-container">
+      <!-- 404 Code with Mint Accent -->
+      <h1 class="error-code">404</h1>
+
+      <!-- Main Message -->
+      <h2 class="main-message">Oops! Page Not Found.</h2>
+
+      <!-- Descriptive Text -->
+      <p class="description">
+        The page you're looking for might have been removed, had its name
+        changed, or is temporarily unavailable.
+      </p>
+
+      <!-- Home Button/Link -->
+      <a href="/" class="home-button"> Go Back Home </a>
+
+      <!-- Subtle Footer/Comment -->
+      <div class="footer-note">Server response code: 404</div>
+    </div>
+  </body>
+</html>

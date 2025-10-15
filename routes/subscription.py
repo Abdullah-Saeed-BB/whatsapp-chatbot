@@ -47,7 +47,7 @@ def subscription_status(subs_id):
     try:
         cur = db.execute("SELECT * FROM customers WHERE id = ?", (subs_id,))
         customer = cur.fetchone()
-        return render_template("subscription_status.html", customer=customer)
+        return render_template("subscription_status.html", customer=customer, subs_id=subs_id)
     except:
         render_template("subscription_status.html", customer=[])
     

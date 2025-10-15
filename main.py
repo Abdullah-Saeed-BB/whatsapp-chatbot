@@ -38,6 +38,9 @@ app.config["is_sys_instruction_updated"] = False
 def home():
     return render_template("landing_page.html")
 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("not_found.html")
 
 # register blueprints
 app.register_blueprint(customers_bp, url_prefix="/api/customers")

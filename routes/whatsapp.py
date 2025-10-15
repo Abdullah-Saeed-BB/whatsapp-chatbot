@@ -2,7 +2,7 @@ from flask import Blueprint, request, current_app
 from dotenv import load_dotenv
 from twilio.twiml.messaging_response import MessagingResponse
 import google.generativeai as genai
-from routes.utils import load_system_instruction, get_history, save_history
+from routes.utils import load_system_instruction, get_history, save_history, get_subscription_details
 import os
 
 load_dotenv()
@@ -26,8 +26,9 @@ def whatsapp_webhook():
 
     resp = MessagingResponse()
 
+    res = generate_response(user_msg, sender, user_name)
     try:
-        res = generate_response(user_msg, sender, user_name)
+        pass
     except Exception as e:
         print(e)
         res = "Sorry, there error occures while generate the response. Please try again later.\n\nالمعذرة, ولكن هنالك خطأ حدث اثناء إنشاء الرد. الرجاء المحاولة مرة اخرى لاحقاً"
@@ -40,7 +41,7 @@ def whatsapp_webhook():
 
     return str(resp)
 
-maximum_messages = 14
+maximum_messages = 11
 
 def generate_response(body, sender, user_name):
     contents = get_history(sender, body, user_name)
@@ -57,27 +58,32 @@ def generate_response(body, sender, user_name):
         "max_output_tokens": 600
     })
 
-    # model_res = {"text": "FU#KING RESPONSE!!"}
+    part = model_res.candidates[0].content.parts[0]
 
-    if model_res.candidates and model_res.candidates[0].content.parts:
-    # if True:
-        if len(contents) > maximum_messages - 3:
-            return [
-                f"You only got {maximum_messages - len(contents)} messages left\
-                \nلديك فقد {maximum_messages - len(contents)} رسائل متبقية",
-                model_res.text,
-                # model_res["text"], 
-            ]
+    try:
+        text = part.text
+        if hasattr(part, "function_call") and part.function_call.name == "get_subscription_details":
+            subs_id = part.function_call.args["subs_id"]
+            return str(get_subscription_details(subs_id, to_string=True))        
+        else:
+            save_history(sender, contents, text)
+            if len(contents) >= maximum_messages - 3:
+                return [
+                    f"You got {maximum_messages - len(contents)} messages left\
+                    \nلديك فقد {maximum_messages - len(contents)} رسائل متبقية",
+                    text,
+                ]
 
-        save_history(sender, contents, model_res.text)
-        # save_history(sender, contents, model_res["text"])
-        return model_res.text
-        # return model_res["text"]
-    raise Exception("Model didn't response")
+            return text
+    except Exception as e:
+        print("Error while generate a response:", e)
+        raise Exception("Model didn't response")
     
 
 def load_model():
     global model
     system_instruction = load_system_instruction()
 
-    model = genai.GenerativeModel('gemini-2.5-flash', system_instruction=system_instruction)
+    model = genai.GenerativeModel('gemini-2.5-flash',
+                                  system_instruction=system_instruction,
+                                  tools=[get_subscription_details])

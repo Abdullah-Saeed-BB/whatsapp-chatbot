@@ -58,26 +58,35 @@ def generate_response(body, sender, user_name):
         "max_output_tokens": 600
     })
 
-    part = model_res.candidates[0].content.parts[0]
+    parts = model_res.candidates[0].content.parts
+
+    messages = []
 
     try:
-        text = part.text
-        if hasattr(part, "function_call") and part.function_call.name == "get_subscription_details":
-            subs_id = part.function_call.args["subs_id"]
-            return str(get_subscription_details(subs_id, to_string=True))        
+        if len(contents) >= maximum_messages - 3:
+            messages.append(
+                f"You got {maximum_messages - len(contents)} messages left\
+                \nلديك فقد {maximum_messages - len(contents)} رسائل متبقية",
+            )
+        # text = part.text
+        if hasattr(parts[-1], "function_call") and parts[-1].function_call.name == "get_subscription_details":
+            subs_id = parts[-1].function_call.args["subs_id"]
+            subs_details = get_subscription_details(subs_id, to_string=True)
+            if len(parts) > 1 and hasattr(parts[0], "text"):
+                text = parts[0].text
+                messages.append(text)
+                # return [text, subs_details]
+            messages.append(subs_details)
+            # return subs_details
         else:
-            save_history(sender, contents, text)
-            if len(contents) >= maximum_messages - 3:
-                return [
-                    f"You got {maximum_messages - len(contents)} messages left\
-                    \nلديك فقد {maximum_messages - len(contents)} رسائل متبقية",
-                    text,
-                ]
-
-            return text
+            text = parts[0].text
+            messages.append(text)
     except Exception as e:
         print("Error while generate a response:", e)
         raise Exception("Model didn't response")
+    
+    save_history(sender, contents, messages[-1])
+    return messages
     
 
 def load_model():

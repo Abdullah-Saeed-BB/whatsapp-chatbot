@@ -36,7 +36,7 @@ def subscription():
             return render_template("subscription.html", error="Unable to submit the subscription.")
     
     plan = request.args.get("plan")
-    is_from_whatsapp = True if request.args.get("ifw").startswith("1") else False
+    is_from_whatsapp = True if request.args.get("ifw") and request.args.get("ifw").startswith("1") else False
 
     return render_template("subscription.html", plan=plan, is_from_whatsapp=is_from_whatsapp)
     

@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from twilio.twiml.messaging_response import MessagingResponse
 import google.generativeai as genai
 from routes.utils import load_system_instruction, get_history, save_history, get_subscription_details
+import re
 import os
 
 load_dotenv()
@@ -40,7 +41,7 @@ def whatsapp_webhook():
 
     return str(resp)
 
-maximum_messages = 9
+maximum_messages = 12
 
 def generate_response(body, sender, user_name):
     contents = get_history(sender, body, user_name)
@@ -75,11 +76,11 @@ def generate_response(body, sender, user_name):
             subs_details = get_subscription_details(subs_id, to_string=True)
             if len(parts) > 1 and hasattr(parts[0], "text"):
                 text = parts[0].text
-                messages.append(text)
+                messages.append(clean_text(text))
             messages.append(subs_details)
         else:
             text = parts[0].text
-            messages.append(text)
+            messages.append(clean_text(text))
     except Exception as e:
         print("Error while generate a response:", e)
         raise Exception("Model didn't response")
@@ -95,3 +96,8 @@ def load_model():
     model = genai.GenerativeModel('gemini-2.5-flash',
                                   system_instruction=system_instruction,
                                   tools=[get_subscription_details])
+
+def clean_text(txt):
+    print("ORIGINAL TEXT:", txt)
+    txt = " ".join(re.split(r"\[(\S+)\]\S+", txt))
+    return txt

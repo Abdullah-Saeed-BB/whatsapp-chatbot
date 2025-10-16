@@ -36,8 +36,10 @@ def whatsapp_webhook():
     if type(res) == str:
         resp.message(res)
     else:
-        for message in res:
-            resp.message(message)
+        print(res)
+        resp.message(('\n-------\n'.join(res)))
+        # for message in res:
+        #     resp.message(message)
 
     return str(resp)
 

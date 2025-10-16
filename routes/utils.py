@@ -41,8 +41,10 @@ def get_subscription_details(subs_id, to_string=False):
             return "Sorry, a technical issue occurred while retrieving your subscription data. Please try again later.\n نعتذر، حدثت مشكلة تقنية أثناء محاولة جلب بيانات اشتراكك. يُرجى المحاولة مرة أخرى في وقت لاحق."
         case _:
             try:
-                return f"ID: {subs_id}\nName: {data["name"]}\nPhone Number: {data["phone_num"]}\
-                    \nPlan: {data["plan"]}\nPay Style: {data["pay_style"]}\nValid Until: {data["valid_until"]}"
+                return f"*ID:* {subs_id}\n*Name:* {data["name"]}\n*Phone Number:* {data["phone_num"]}\
+                    \n*Plan:* {data["plan"]}\n*Pay Style:* {data["pay_style"]}\n*Valid Until:* {data["valid_until"]}\n\
+                    \n*المعرف:* {subs_id}\n*الاسم:* {data["name"]}\n*رقم الجوال:* {data["phone_num"]}\
+                    \n*خطة:* {data["plan"]}\n*اسلوب الدفع:* {data["pay_style"]}\n*تاريخ الانهاء:* {data["valid_until"]}"
             except: return data
 
 

@@ -14,8 +14,10 @@ whatsapp_bp = Blueprint("whatsapp", __name__)
 genai.configure(api_key=os.getenv('GEMINI_API_KEY'))
 model = None
 
+# Here the Twilio send Request for user messages and return the new message 
 @whatsapp_bp.route("/", methods=["POST"])
 def whatsapp_webhook():
+    # Get main information
     user_msg = request.form.get("Body")
     sender = request.form.get("From")
     user_name = request.form.get("ProfileName")
@@ -25,6 +27,7 @@ def whatsapp_webhook():
     print(msg)
     print("-" * (len(msg)))
 
+    # For making XML file to Twilio recognize it
     resp = MessagingResponse()
 
     try:

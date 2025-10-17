@@ -22,10 +22,7 @@ def whatsapp_webhook():
     sender = request.form.get("From")
     user_name = request.form.get("ProfileName")
 
-    msg = f"| {user_name} ({sender}): {user_msg} |"
-    print("-" * (len(msg)))
-    print(msg)
-    print("-" * (len(msg)))
+    print(f"| {user_name} ({sender}): {user_msg} |")
 
     # For making XML file to Twilio recognize it
     resp = MessagingResponse()
@@ -33,16 +30,13 @@ def whatsapp_webhook():
     try:
         res = generate_response(user_msg, sender, user_name)
     except Exception as e:
-        print(e)
+        print("Error while generate the response:", e)
         res = "Sorry, there error occures while generate the response. Please try again later.\n\nالمعذرة, ولكن هنالك خطأ حدث اثناء إنشاء الرد. الرجاء المحاولة مرة اخرى لاحقاً"
     
     if type(res) == str:
         resp.message(res)
     else:
-        print(res)
         resp.message(('\n-------\n'.join(res)))
-        # for message in res:
-        #     resp.message(message)
 
     return str(resp)
 
@@ -52,7 +46,6 @@ def generate_response(body, sender, user_name):
     contents = get_history(sender, body, user_name)
     messages_length = len(list(filter(lambda cont: cont["role"] == "model", contents)))
 
-    print(f"HE GOT {maximum_messages - messages_length} MESSAGES LEFT")
 
     if messages_length > maximum_messages:
         return "Sorry, but you have reached the maximum messages. Try again later.\n\nالمعذرة, لقد وصلت الحد الأقصلا من الرسائل. حاول مرة اخرى لاحقاً."
@@ -87,7 +80,7 @@ def generate_response(body, sender, user_name):
             text = parts[0].text
             messages.append(clean_text(text))
     except Exception as e:
-        print("Error while generate a response:", e)
+        print("Error while combining the messages:", e)
         raise Exception("Model didn't response")
 
     save_history(sender, contents, messages[-1])
@@ -103,6 +96,5 @@ def load_model():
                                   tools=[get_subscription_details])
 
 def clean_text(txt):
-    print("ORIGINAL TEXT:", txt)
     txt = " ".join(re.split(r"\[(\S+)\]\S+", txt))
     return txt

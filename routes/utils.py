@@ -76,12 +76,10 @@ SESSION_CHAT_HISTORIES = TTLCache(maxsize=1000, ttl=600)
 
 def get_history(user_id, new_message, user_name):
     if SESSION_CHAT_HISTORIES.get(user_id):
-        print("FROM CHAT SESSION VARIABLE")
         new_contents = SESSION_CHAT_HISTORIES[user_id]
         new_contents.append({"role": "user", "parts": [f'{user_name}: {new_message}']})
  
     else:
-        print("FROM TWILIO WHATSAPP API")
         try:
             inbound_messages = twilio_client.messages.list(from_=user_id, limit=2)
 

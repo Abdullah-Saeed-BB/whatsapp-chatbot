@@ -15,5 +15,5 @@ def dashboard():
         num_of_customers_whatsapp = cur.fetchone()[0]        
         return render_template("dashboard.html", num_of_customers=num_of_customers, num_of_customers_whatsapp=num_of_customers_whatsapp)
     except Exception as e:
-        print("Error", str(e))
+        print("Error while getting main information for the dashboard", str(e))
         return render_template("dashboard.html", error=True)

@@ -17,8 +17,6 @@ def subscription():
             data = dict([(key, str(request.form.get(key))) for key in cols])
             data["is_from_whatsapp"] = True if data["is_from_whatsapp"] == "on" else False 
 
-            print(data)
-
             id = generate_id()
             match data.get("pay_style"):
                 case "None": valid_until = date.today()
@@ -32,7 +30,7 @@ def subscription():
 
             return redirect(url_for("subscription.subscription_status", subs_id=id))
         except Exception as e:
-            print("ERROR:", str(e))
+            print("Error while submit the subscription:", str(e))
             return render_template("subscription.html", error="Unable to submit the subscription.")
     
     plan = request.args.get("plan")

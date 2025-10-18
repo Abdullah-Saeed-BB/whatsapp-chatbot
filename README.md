@@ -5,7 +5,11 @@ The chatbot answers for CreativeCut e-learning platofrm, and display customer su
 I made an [web application](WEB_APPLICATION) to tune the **Gemini model**.
 #### [Whatsapp Chatbot (Send `join map-recognize`)](WHATSAPP_CHATBOT)
 ## Project Structure
-**For Web Application:**
+#### Chat Bot:
+ - `routes/utils.py`:
+ - `routes/whatsapp.py`:
+ - `db/system_instruction.json`:
+#### Web Application:
  - `routes/auth.py`:
  - `routes/chatbot_instruction.py`:
  - `routes/customers.py`:
@@ -16,11 +20,6 @@ I made an [web application](WEB_APPLICATION) to tune the **Gemini model**.
  - `static`: Contain all the CSS files.
  - `db/creativecut.db`:
  - `db/schema.sql`:
-**Chat Bot:**
- - `routes/utils.py`:
- - `routes/whatsapp.py`:
- - `db/system_instruction.json`:
-
 ## Installation
 [Process for getting the Gemini Keys and Twilio Keys]
 

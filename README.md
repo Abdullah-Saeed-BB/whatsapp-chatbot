@@ -86,4 +86,5 @@ Start chatting<br/>
 Send the join code to the WhatsApp sandbox number<br/>
 Then send any message — your model should respond automatically.
 
-## Screenshots
+## Screenshot
+![Chatbot_whatsappjpg](https://github.com/user-attachments/assets/26f6fa3a-39b2-493a-b97c-b7469df98616)

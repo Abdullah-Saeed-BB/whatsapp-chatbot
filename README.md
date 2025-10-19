@@ -2,8 +2,8 @@
 Intelligent Whatsapp chatbot built using **Flask** and **Twilio API** to connect the server to the whatsapp, and **Gemini model**.<br/>
 The chatbot answers for CreativeCut e-learning platofrm supporting English and Arabic, and display customer subscription details using the subscription ID.
 
-I made an **[web application](WEB_APPLICATION)** to tune the **Chatbot model**.
-#### [Whatsapp Chatbot (Send `join map-recognize`)](WHATSAPP_CHATBOT)
+I made an **[web application](https://whatsapp-chatbot-8omo.onrender.com/api/dashboard/)** to tune the **Chatbot model**.
+#### [Whatsapp Chatbot (Send `join map-recognize`)](https://api.whatsapp.com/send?phone=14155238886&text=join%20map-recognize)
 ## Project Structure
 #### Chat Bot:
  - `routes/utils.py`: Functions for loading the converstion, saving them temprorliey, load the offers, and convert the *system_instruction.json* to text.
@@ -79,7 +79,7 @@ ngrok http 5000
 Copy the Forwarding URL and paste it in Twilio:
 Messaging → Send a WhatsApp Message → Sandbox settings → When a message comes in
 
-Remeber to add `/whatsapp` in the end of the URL<br/>
+Remember to add `/whatsapp` in the end of the URL<br/>
 (e.g. https://your-ngrok-url.ngrok.io/whatsapp)
 
 Start chatting<br/>
